@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
+import config from 'config'
 
 async function connect() {
-  let dbUri: any = process.env.DB_URI
+  let dbUri = config.get<string>('dbUri')
 
   try {
     await mongoose.connect(dbUri)

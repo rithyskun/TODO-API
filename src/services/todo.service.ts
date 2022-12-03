@@ -1,7 +1,6 @@
 import { TodoInput, TodoDocument } from './../models/todo.model';
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import TodoModel  from '../models/todo.model'
-import { TodoComment } from 'typescript';
 
 export async function findAllTodo() {
     try {
@@ -41,6 +40,15 @@ export async function deleteTodoTask(query: FilterQuery<TodoDocument>) {
 export async function findOneTodoTask(query: FilterQuery<TodoInput>, options: QueryOptions = { lean: true}) {
     try {
         const todo = await TodoModel.findOne(query, {}, options)
+        return todo
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export async function queryTodoTask(query: FilterQuery<TodoInput>, options: QueryOptions = { lean: true}) {
+    try {
+        const todo = await TodoModel.find(query, {}, options)
         return todo
     } catch (error: any) {
         throw new Error(error)

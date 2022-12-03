@@ -17,7 +17,7 @@ const toDoSchema = new mongoose.Schema<TodoDocument>({
     },
     isCompleted: {
         type: Boolean,
-        required: false
+        required: true
     }
 }, { timestamps: true })
 
@@ -25,9 +25,10 @@ toDoSchema.virtual('id').get(function () {
     return this._id.toHexString()
   })
   
-  toDoSchema.set('toJSON', {
-    virtuals: true,
-  })
+toDoSchema.set('toJSON', {
+virtuals: true,
+})
+
 const TodoModel = mongoose.model<TodoDocument>('Todo', toDoSchema)
 
 export default TodoModel

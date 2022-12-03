@@ -12,7 +12,7 @@ const payload = {
     body: object({
         todo: string({
             required_error: 'Todo is required!'
-        }),
+        }).min(2, 'Task name too short - should be 2 characters minimum'),
         isCompleted: boolean({
             required_error: 'Status is required!'
         })
