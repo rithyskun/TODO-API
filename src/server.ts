@@ -1,14 +1,16 @@
 import express, { Express, Request, Response } from 'express'
-import http from 'http'
+
 import compression from 'compression'
 import cors from 'cors'
 import config from 'config'
 import mongoSanitize from 'express-mongo-sanitize'
 import connect from './utils/connection'
 import routes from './routes'
-import { Server } from 'socket.io'
+import { Server as IOServer } from 'socket.io'
 import socket from './utils/socket'
 import httpLog from './utils/httpLog'
+import http from 'http'
+import type { Server as HTTPServer } from 'http'
 
 const options: cors.CorsOptions = {
     origin: '*',
@@ -23,9 +25,8 @@ app.use(express.json())
 app.use(mongoSanitize())
 app.use(httpLog)
 
-const httpServer = http.createServer(app)
-const io = new Server(httpServer, { cors: { origin: '*' } })
-app.set('socketio', io)
+const httpServer: HTTPServer = http.createServer(app)
+const io = new IOServer(httpServer, { cors: { origin: '*' } })
 
 httpServer.listen(port, async () => {
     console.log(`Server is running at port ${port}`)
